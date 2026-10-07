@@ -68,6 +68,24 @@ describe('quota ui state', () => {
     expect(readQuotaUiState()).toEqual({ tab: undefined, sortMode: undefined });
   });
 
+  test('keeps the view mode and email visibility alongside tab and sort', () => {
+    writeQuotaUiState({ tab: 'claude', sortMode: 'soonest' });
+    writeQuotaUiState({ view: 'ledger' });
+    writeQuotaUiState({ showEmails: true });
+    expect(readQuotaUiState()).toEqual({
+      tab: 'claude',
+      sortMode: 'soonest',
+      view: 'ledger',
+      showEmails: true,
+    });
+
+    storage.setItem(KEY, JSON.stringify({ view: 'spreadsheet', showEmails: 'yes' }));
+    const state = readQuotaUiState();
+    expect(state?.view).toBeUndefined();
+    // Anything but an explicit boolean leaves emails masked by default.
+    expect(state?.showEmails).toBeUndefined();
+  });
+
   test('survives absent, malformed, and non-object payloads', () => {
     expect(readQuotaUiState()).toBeNull();
 

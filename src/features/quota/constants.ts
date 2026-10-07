@@ -21,5 +21,10 @@ export const QUOTA_SORT_MODES = ['default', 'soonest'] as const;
 
 export type QuotaSortMode = (typeof QUOTA_SORT_MODES)[number];
 
+/** Account layout: the existing card grid, or a dense one-row-per-account ledger. */
+export const QUOTA_VIEW_MODES = ['cards', 'ledger'] as const;
+
+export type QuotaViewMode = (typeof QUOTA_VIEW_MODES)[number];
+
 /** 与 useRevealGroup 的 GROUP_MAX_TOTAL 一致：卡片级联总预算 360ms。 */
 export const CARD_ENTRANCE_BUDGET_MS = 360;
